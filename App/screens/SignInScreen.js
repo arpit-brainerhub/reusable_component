@@ -5,7 +5,7 @@ import CommonButton from '../components/CommonButton';
 import {SignInScreenStyles} from '../styles/SignInScreenStyles';
 import TextInputComponent from '../components/TextInputComponent';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {getData} from '../constants/StorageUtils';
+import {getUser, storeUser} from '../constants/StorageUtils';
 
 export default class SignInScreen extends Component {
   constructor() {
@@ -46,16 +46,15 @@ export default class SignInScreen extends Component {
     this.setLoading(true);
     setTimeout(() => {
       this.setLoading(false);
-      // Alert.alert(
-      //   '',
-      //   'email : ' + this.state.email + '\npassword : ' + this.state.password,
-      // );
-      getData().then(user => {
+      getUser().then(user => {
         if (
           this.state.email === user.email &&
           this.state.password === user.password
         ) {
-          this.navigateToHome(user.firstName);
+          user.isLoggedIn = 'true';
+          console.log(user);
+          storeUser(user).then(this.navigateToHome());
+          getUser();
         } else {
           Alert.alert('', 'Invalid credentials. Try again');
         }
@@ -67,8 +66,7 @@ export default class SignInScreen extends Component {
     this.props.navigation.replace('SignUp');
   };
 
-  navigateToHome = firstName => {
-    Alert.alert('', 'Welcome ' + firstName);
+  navigateToHome = () => {
     this.props.navigation.replace('Home');
   };
 

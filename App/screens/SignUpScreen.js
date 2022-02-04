@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import CommonButton from '../components/CommonButton';
 import TextInputComponent from '../components/TextInputComponent';
 import {SignUpScreenStyles} from '../styles/SignUpScreenStyles';
-import {storeData} from '../constants/StorageUtils';
+import {storeUser} from '../constants/StorageUtils';
 
 export default class SignUpScreen extends Component {
   constructor() {
@@ -84,12 +84,32 @@ export default class SignUpScreen extends Component {
     });
   };
 
+  validateFields = () => {
+    const {firstName, lastName, email, password, confirmPassword} = this.state;
+    if (
+      firstName.length <= 0 ||
+      lastName.length <= 0 ||
+      email.length <= 0 ||
+      password.length <= 0 ||
+      confirmPassword.length <= 0 ||
+      password !== confirmPassword
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   signup = () => {
-    this.setLoading(true);
-    setTimeout(() => {
-      this.saveUser();
-      this.setLoading(false);
-    }, 2000);
+    if (this.validateFields()) {
+      this.setLoading(true);
+      setTimeout(() => {
+        this.saveUser();
+        this.setLoading(false);
+      }, 2000);
+    } else {
+      Alert.alert('', 'Please enter all the required details correctly');
+    }
   };
 
   saveUser = async () => {
@@ -98,8 +118,9 @@ export default class SignUpScreen extends Component {
       lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password,
+      isLoggedIn: 'true',
     };
-    storeData(user).then(data => this.navigateToHome(data.firstName));
+    storeUser(user).then(data => this.navigateToHome(data.firstName));
   };
 
   setLoading = bool => {
@@ -113,7 +134,6 @@ export default class SignUpScreen extends Component {
   };
 
   navigateToHome = firstName => {
-    Alert.alert('', 'Welcome ' + firstName);
     this.props.navigation.replace('Home');
   };
 

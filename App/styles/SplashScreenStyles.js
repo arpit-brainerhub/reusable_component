@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {colors} from '../theme/colors';
 
-export const HomeScreenStyles = StyleSheet.create({
+export const SplashScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -15,8 +15,6 @@ export const HomeScreenStyles = StyleSheet.create({
   titleTextStyle: {
     color: colors.black,
     fontSize: 30,
-    marginTop: '30%',
-    marginBottom: '15%',
   },
   signinButtonStyle: {
     marginTop: '10%',

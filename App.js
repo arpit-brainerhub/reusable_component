@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from './App/screens/HomeScreen';
 import SignInScreen from './App/screens/SignInScreen';
 import SignUpScreen from './App/screens/SignUpScreen';
+import DrawerNavigation from './App/navigation/DrawerNavigation';
+import SplashScreen from './App/screens/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,13 @@ function App() {
           headerTitleAlign: 'center',
         }}>
         <Stack.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="SignIn"
           component={SignInScreen}
           options={{
@@ -23,7 +31,7 @@ function App() {
           }}
         />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={DrawerNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
