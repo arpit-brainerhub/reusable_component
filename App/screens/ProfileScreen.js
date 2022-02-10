@@ -1,13 +1,32 @@
 import React, {Component} from 'react';
-import {View, Text, Alert, Image} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {getUser} from '../constants/StorageUtils';
+import {Text, Image, Animated} from 'react-native';
 import {ProfileScreenStyles} from '../styles/ProfileScreenStyles';
 
 export default class ProfileScreen extends Component {
   constructor() {
     super();
+    this.state = {
+      fadeAnim: new Animated.Value(0),
+    };
   }
+
+  fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(this.state.fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true, // <-- Add this
+    }).start();
+  };
+
+  fadeOut = () => {
+    // Will change fadeAnim value to 0 in 3 seconds
+    Animated.timing(this.state.fadeAnim, {
+      toValue: 0,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start();
+  };
 
   navigateToHome = () => {
     this.props.navigation.replace('Home');
@@ -20,22 +39,23 @@ export default class ProfileScreen extends Component {
   componentDidMount() {
     const {navigation, route} = this.props;
     navigation.setOptions({title: route.params.user.name});
+    this.fadeIn();
+  }
+
+  componentWillUnmount() {
+    this.fadeOut();
   }
 
   render() {
     const {user} = this.props.route.params;
     return (
-      <View style={ProfileScreenStyles.container}>
+      <Animated.View
+        style={[ProfileScreenStyles.container, {opacity: this.state.fadeAnim}]}>
         <Image
           source={{
             uri: user.photo || '',
           }}
-          style={{
-            height: 200,
-            width: 200,
-            borderRadius: 30,
-            marginBottom: 50,
-          }}
+          style={ProfileScreenStyles.imageStyle}
         />
         <Text style={ProfileScreenStyles.titleTextStyle}>{user.position}</Text>
         <Text style={ProfileScreenStyles.subTitleTextStyle}>{user.name}</Text>
@@ -43,7 +63,7 @@ export default class ProfileScreen extends Component {
           {user.description}
         </Text>
         <Text style={ProfileScreenStyles.footerTextStyle}>{'thank you'}</Text>
-      </View>
+      </Animated.View>
     );
   }
 }

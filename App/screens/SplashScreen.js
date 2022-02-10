@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, Alert} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {View, Text} from 'react-native';
 import {getUser} from '../constants/StorageUtils';
 import {SplashScreenStyles} from '../styles/SplashScreenStyles';
+import * as strings from '../constants/StringConstants';
 
 export default class SplashScreen extends Component {
   navigateToHome = () => {
@@ -26,7 +26,9 @@ export default class SplashScreen extends Component {
   render() {
     return (
       <View style={SplashScreenStyles.container}>
-        <Text style={SplashScreenStyles.titleTextStyle}>Splash Screen</Text>
+        <Text style={SplashScreenStyles.titleTextStyle}>
+          {strings.splashScreen}
+        </Text>
       </View>
     );
   }

@@ -4,6 +4,8 @@ import {colors} from '../theme/colors';
 export const SplashScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   gradientstyle: {
     flex: 1,

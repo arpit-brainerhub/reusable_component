@@ -6,6 +6,9 @@ import CommonButton from '../components/CommonButton';
 import TextInputComponent from '../components/TextInputComponent';
 import {SignUpScreenStyles} from '../styles/SignUpScreenStyles';
 import {storeUser} from '../constants/StorageUtils';
+import * as constants from '../constants/Constants';
+import * as strings from '../constants/StringConstants';
+import {colors} from '../theme/colors';
 
 export default class SignUpScreen extends Component {
   constructor() {
@@ -54,24 +57,6 @@ export default class SignUpScreen extends Component {
     });
   };
 
-  firstNameIcon = {
-    type: 'ionicon',
-    name: 'ios-person',
-    color: 'white',
-  };
-
-  emailIcon = {
-    type: 'MaterialCommunityIcons',
-    name: 'email',
-    color: 'white',
-  };
-
-  passwordIcon = {
-    type: 'MaterialIcons',
-    name: 'lock',
-    color: 'white',
-  };
-
   toggleShowPassword = () => {
     this.setState({
       isPasswordHidden: !this.state.isPasswordHidden,
@@ -108,7 +93,7 @@ export default class SignUpScreen extends Component {
         this.setLoading(false);
       }, 2000);
     } else {
-      Alert.alert('', 'Please enter all the required details correctly');
+      Alert.alert('', strings.enterRequiredFields);
     }
   };
 
@@ -140,21 +125,23 @@ export default class SignUpScreen extends Component {
   render() {
     return (
       <LinearGradient
-        colors={['#ff8a00', '#e52e71']}
+        colors={[colors.signupLinearStart, colors.signupLinearEnd]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         style={SignUpScreenStyles.gradientstyle}>
         <KeyboardAwareScrollView>
           <View style={SignUpScreenStyles.container}>
-            <Text style={SignUpScreenStyles.titleTextStyle}>{'Sign Up'}</Text>
+            <Text style={SignUpScreenStyles.titleTextStyle}>
+              {strings.signup}
+            </Text>
             <View style={SignUpScreenStyles.rowStyle}>
               <TextInputComponent
                 containerStyle={SignUpScreenStyles.firstLastNameContainerStyle}
                 disabled={this.state.isLoading}
                 value={this.state.firstName}
                 onChangeText={this.setFirstName}
-                placeholder="first name"
-                leftIcon={this.firstNameIcon}
+                placeholder={strings.firstNamePlaceholder}
+                leftIcon={constants.firstNameIcon}
               />
               <TextInputComponent
                 containerStyle={[
@@ -163,7 +150,7 @@ export default class SignUpScreen extends Component {
                 disabled={this.state.isLoading}
                 value={this.state.lastName}
                 onChangeText={this.setLastName}
-                placeholder="last name"
+                placeholder={strings.lastNamePlaceholder}
               />
             </View>
 
@@ -171,16 +158,16 @@ export default class SignUpScreen extends Component {
               disabled={this.state.isLoading}
               value={this.state.email}
               onChangeText={this.setEmail}
-              placeholder="email@address.com"
-              leftIcon={this.emailIcon}
+              placeholder={strings.emailPlaceHolder}
+              leftIcon={constants.emailIcon}
             />
 
             <TextInputComponent
               disabled={this.state.isLoading}
               value={this.state.password}
               onChangeText={this.setPassword}
-              placeholder="password"
-              leftIcon={this.passwordIcon}
+              placeholder={strings.passwordPlaceHolder}
+              leftIcon={constants.passwordIcon}
               isPasswordInput={true}
               isPasswordHidden={this.state.isPasswordHidden}
               toggleShowPassword={this.toggleShowPassword}
@@ -190,7 +177,7 @@ export default class SignUpScreen extends Component {
               disabled={this.state.isLoading}
               value={this.state.confirmPassword}
               onChangeText={this.setConfirmPassword}
-              placeholder="confirm password"
+              placeholder={strings.confirmPasswordPlaceHolder}
               leftIcon={this.passwordIcon}
               isPasswordInput={true}
               isPasswordHidden={this.state.isConfirmPasswordHidden}
@@ -199,12 +186,15 @@ export default class SignUpScreen extends Component {
 
             <CommonButton
               disabled={this.state.isLoading}
-              title={'Register'}
+              title={strings.register}
               style={SignUpScreenStyles.signupButtonStyle}
               onPress={this.signup}
             />
             <View style={SignUpScreenStyles.seperatorStyle} />
-            <CommonButton title={'Sign In'} onPress={this.navigateToSignin} />
+            <CommonButton
+              title={strings.signin}
+              onPress={this.navigateToSignin}
+            />
           </View>
         </KeyboardAwareScrollView>
       </LinearGradient>

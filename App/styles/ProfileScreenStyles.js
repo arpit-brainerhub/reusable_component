@@ -7,12 +7,11 @@ export const ProfileScreenStyles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 80,
   },
-  gradientstyle: {
-    flex: 1,
-  },
-  bodyTextStyle: {
-    color: colors.white,
-    fontSize: 18,
+  imageStyle: {
+    height: 200,
+    width: 200,
+    borderRadius: 30,
+    marginBottom: 50,
   },
   titleTextStyle: {
     color: colors.black,
@@ -35,14 +34,5 @@ export const ProfileScreenStyles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginVertical: 20,
     marginHorizontal: 50,
-  },
-  signinButtonStyle: {
-    marginTop: '10%',
-  },
-  seperatorStyle: {
-    height: 1,
-    width: '30%',
-    backgroundColor: colors.transparent,
-    marginTop: '10%',
   },
 });

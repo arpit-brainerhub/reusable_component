@@ -4,6 +4,7 @@ import {colors} from '../theme/colors';
 export const HomeScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
+    margin: 10,
   },
   gradientstyle: {
     flex: 1,
